@@ -12,17 +12,19 @@ fn main() -> Result<(), Box<std::error::Error>> {
     // Ok(())
     let sock = socket(AddressFamily::Inet, SockType::Stream, SockFlag::empty(), None)?;
 
-    let ip_addr = IpAddr::new_v4(1, 1, 1, 1);
-    let port = 80;
+    let ip_addr = IpAddr::new_v4(94,142,241,111);
+    let port = 23;
+
+    // let ip_addr = IpAddr::new_v4(1,1,1,1);
+    // let port = 80;
     let sockaddr = SockAddr::new_inet(InetAddr::new(ip_addr, port));
     connect(sock, &sockaddr)?;
 
-    let mut buf = [0u8; 1024];
-    let len = recv(sock, &mut buf, MsgFlags::empty())?;
-    let new_bytes = &buf[..len];
 
     loop {
-        // io::stdout().write(new_bytes);
+        let mut buf = [0u8; 1024];
+        let len = recv(sock, &mut buf, MsgFlags::empty())?;
+        let new_bytes = &buf[..len];
         io::stdout().write(new_bytes)?;
     }
 }
